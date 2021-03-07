@@ -1,4 +1,5 @@
 import React from 'react';
+import { LogBox } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { Platform } from 'react-native';
@@ -13,6 +14,12 @@ import { BookedScreen } from '../screens/BookedScreen';
 import { THEME } from '../theme';
 import {AboutScreen} from '../screens/AboutScreen';
 import {CreateScreen} from '../screens/CreateScreen';
+
+
+
+LogBox.ignoreLogs([
+    "Your project is accessing the following APIs from a deprecated global rather than a module import: Constants (expo-constants).",
+]);
 
 const navigationOptions = {
     headerStyle: {
@@ -70,15 +77,44 @@ const BottomNavigator = Platform.OS === 'android'
     }
 });
 
+const AboutNavigator = createStackNavigator({
+    About: AboutScreen
+}, {
+    defaultNavigationOptions: navigationOptions
+});
+
+const CreateNavigator = createStackNavigator({
+    Create: CreateScreen
+}, {
+    defaultNavigationOptions: navigationOptions
+})
+
 const MainNavigator = createDrawerNavigator({
     PostTabs: {
         screen: BottomNavigator,
+        navigationOptions: {
+            drawerLabel: 'Главная',
+            // drawerIcon: <Ionicons name="ios-star" />
+        }
     },
     About: {
-        screen: AboutScreen,
+        screen: AboutNavigator,
+        navigationOptions: {
+            drawerLabel: 'О приложение'
+        }
     },
     Create: {
-        screen: CreateScreen,
+        screen: CreateNavigator,
+        navigationOptions: {
+            drawerLabel: 'Новый пост'
+        }
+    }
+}, {
+    contentOptions: {
+        activeTintColor: THEME.MAIN_COLOR,
+        labelStyle: {
+            fontFamily: 'open-bold',
+        }
     }
 });
 
