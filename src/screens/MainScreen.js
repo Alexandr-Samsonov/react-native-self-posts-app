@@ -6,7 +6,6 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { AppHeaderIcon } from '../components/AppHeaderIcon';
 import { PostList } from '../components/PostList';
 import { loadPosts } from '../store/actions/post';
-import {View} from "react-native-web";
 
 export const MainScreen = ({ navigation }) => {
     const openPostHandler = (post) => {
